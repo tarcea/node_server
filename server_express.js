@@ -2,9 +2,20 @@ const express = require('express');
 const app = express();
 const querystring = require('querystring');
 
+app.use('/css', express.static(__dirname + '/public/css'));
+app.use('/', (req, res, next) => {
+  console.log('a request was made for' + req.url)
+  res.cookie('cookiename', 'cookievalue')
+
+  next()
+})
+
 app.get('/', (req, res) => {
     res.send(`
         <html>
+          <head>
+          <link type="text/css" rel="stylesheet" href="/css/style.css" />
+          </head>
           <body>
             <h1>Hello, my express server darling...</h1>
           </body>
